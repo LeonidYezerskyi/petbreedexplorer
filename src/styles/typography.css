@@ -1,0 +1,56 @@
+h1 {
+  @apply text-2xl sm:text-3xl lg:text-5xl;
+}
+
+h2 {
+  @apply text-2xl lg:text-4xl;
+}
+
+h3 {
+  @apply text-xl lg:text-3xl;
+}
+
+h4 {
+  @apply text-lg lg:text-2xl;
+}
+
+h5 {
+  @apply text-base sm:text-lg md:text-xl;
+}
+
+h6 {
+  @apply text-lg;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: #0061e9;
+  cursor: pointer;
+}
+
+a:hover {
+  color: #0450ba;
+}
+
+ul {
+  padding: 0 1rem;
+  list-style: none;
+}
+
+p,
+span {
+  margin: 0;
+}
