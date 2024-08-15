@@ -7,18 +7,33 @@ interface Image {
   url: string;
 }
 
-interface Breed {
+interface BreedBase {
+  id: string;
+  name: string;
+  image: Image;
+}
+
+interface Cat extends BreedBase {
   weight: {
     imperial: string;
     metric: string;
   };
-  id: string;
-  name: string;
   temperament: string;
   origin: string;
   description: string;
   life_span: string;
-  image: Image;
+}
+
+interface Dog extends BreedBase {
+  weight: {
+    imperial: string;
+    metric: string;
+  };
+  temperament: string;
+  country_code?: string;
+  bred_for?: string;
+  description?: string;
+  life_span: string;
 }
 
 interface CatImage {
@@ -26,15 +41,31 @@ interface CatImage {
   url: string;
 }
 
-const API_KEY =
-  "live_KNubCVMQsRfq9wKrsB0w66Wn5l4eTTiaKW9lcmf0b9vDMKnUB0HlsqBIr0TCWJm8";
+interface DogImage {
+  id: string;
+  url: string;
+}
 
-export const getAllBreeds = async (page: number = 0): Promise<Breed[]> => {
+export const getAllBreeds = async (
+  page: number = 0
+): Promise<(Cat | Dog)[]> => {
   try {
-    const { data } = await axios.get<Breed[]>(
-      `https://api.thecatapi.com/v1/breeds?limit=12&page=${page}&api_key=${API_KEY}`
-    );
-    return data;
+    const [catsResponse, dogsResponse] = await Promise.all([
+      axios.get<Cat[]>(
+        `https://api.thecatapi.com/v1/breeds?limit=12&page=${page}&api_key=${process.env.NEXT_PUBLIC_API_KEY_CATS}`
+      ),
+      axios.get<Dog[]>(
+        `https://api.thedogapi.com/v1/breeds?limit=12&page=${page}&api_key=${process.env.NEXT_PUBLIC_API_KEY_DOGS}`
+      ),
+    ]);
+
+    const cats = catsResponse.data;
+    const dogs = dogsResponse.data;
+
+    const combinedBreeds = [...cats, ...dogs];
+    const shuffledBreeds = combinedBreeds.sort(() => 0.5 - Math.random());
+
+    return shuffledBreeds;
   } catch (error) {
     console.error("Error getting all breeds:", error);
     throw error;
@@ -46,12 +77,29 @@ export const getCatsByBreed = async (
 ): Promise<CatImage[]> => {
   try {
     const { data } = await axios.get<CatImage[]>(
-      `https://api.thecatapi.com/v1/images/search?limit=8&breed_ids=${selectedBreedId}&api_key=${API_KEY}`
+      `https://api.thecatapi.com/v1/images/search?limit=8&breed_ids=${selectedBreedId}&api_key=${process.env.NEXT_PUBLIC_API_KEY_CATS}`
     );
     return data;
   } catch (error) {
     console.error(
       `Error getting detailed information for breed ${selectedBreedId}:`,
+      error
+    );
+    throw error;
+  }
+};
+
+export const getDogsByBreed = async (
+  selectedBreedId: string
+): Promise<DogImage[]> => {
+  try {
+    const { data } = await axios.get<DogImage[]>(
+      `https://api.thedogapi.com/v1/images/search?limit=8&breed_ids=${selectedBreedId}&api_key=${process.env.NEXT_PUBLIC_API_KEY_DOGS}`
+    );
+    return data;
+  } catch (error) {
+    console.error(
+      `Error getting detailed information for dog breed ${selectedBreedId}:`,
       error
     );
     throw error;

@@ -1,5 +1,5 @@
 import React from "react";
-import { getCatsByBreed } from "@/services/api.ts";
+import { getCatsByBreed, getDogsByBreed } from "@/services/api.ts";
 import Image from "next/image";
 import { Container } from "@/components/Container";
 
@@ -16,8 +16,10 @@ interface Breed {
     };
     name: string;
     temperament: string;
-    origin: string;
-    description: string;
+    origin?: string;
+    country_code?: string;
+    description?: string;
+    bred_for?: string;
     life_span: string;
   }[];
 }
@@ -30,10 +32,22 @@ interface BreedPageProps {
 
 const BreedPage = async ({ params }: BreedPageProps) => {
   const { id } = params;
-  const cats = await getCatsByBreed(id);
-  console.log("🚀 ~ BreedPage ~ cats:", cats);
+  const isNumberId = !isNaN(Number(id));
 
-  const breed = cats[0]?.breeds[0];
+  let animals;
+
+  try {
+    if (isNumberId) {
+      animals = await getDogsByBreed(id);
+    } else {
+      animals = await getCatsByBreed(id);
+    }
+  } catch (error) {
+    console.error("Error fetching breed data:", error);
+    return <div>Error fetching breed data</div>;
+  }
+
+  const breed = animals[0]?.breeds[0];
 
   return (
     <div className="flex w-full flex-col items-center">
@@ -48,24 +62,31 @@ const BreedPage = async ({ params }: BreedPageProps) => {
             <p className="mt-2 text-secondary-700">
               <strong>Temperament:</strong> {breed.temperament}
             </p>
-            <p className="mt-2 text-secondary-700">
-              <strong>Origin country:</strong> {breed.origin}
-            </p>
+            {breed.origin ||
+              (breed.country_code && (
+                <p className="mt-2 text-secondary-700">
+                  <strong>Origin:</strong> {breed.origin || breed.country_code}
+                </p>
+              ))}
             <p className="mt-2 text-secondary-700">
               <strong>Life Span:</strong> {breed.life_span} years
             </p>
-            <p className="mt-2 text-secondary-700">
-              <strong>Description:</strong> {breed.description}
-            </p>
+            {breed.description ||
+              (breed.bred_for && (
+                <p className="mt-2 text-secondary-700">
+                  <strong>Description:</strong>{" "}
+                  {breed.description || breed.bred_for}
+                </p>
+              ))}
           </div>
         )}
         <div className="pt-5 grid grid-cols-1 gap-x-2 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {cats.map((cat) => (
-            <div key={cat.id} className="group">
+          {animals.map((animal) => (
+            <div key={animal.id} className="group">
               <div className="w-full h-40 overflow-hidden rounded-lg bg-secondary-200">
                 <Image
-                  src={cat.url}
-                  alt={cat.breeds[0]?.name || "Cat Image"}
+                  src={animal.url}
+                  alt={animal.breeds[0]?.name || "Animal Image"}
                   width={500}
                   height={500}
                   className="group-hover:opacity-75"
