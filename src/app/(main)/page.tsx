@@ -1,7 +1,12 @@
-export default function Home() {
+import { getAllBreeds } from "@/services/api.ts";
+import BreedList from "@/components/BreedList";
+
+export default async function Home() {
+  const initialCats = await getAllBreeds();
+
   return (
     <div className="flex w-full flex-col items-center">
-      <p className="text-black">Page</p>
+      <BreedList initialCats={initialCats} />
     </div>
   );
 }

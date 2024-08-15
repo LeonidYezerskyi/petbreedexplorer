@@ -32,7 +32,7 @@ const config: Config = {
       "6xl": ["72px", { lineHeight: "110%" }],
     },
     extend: {
-      colors: ({ colors }) => ({
+      colors: {
         primary: {
           0: "#F8FBFF",
           100: "#DDEBFE",
@@ -56,9 +56,10 @@ const config: Config = {
           800: "#20252E",
           900: "#040815",
         },
-      }),
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };
+
 export default config;
