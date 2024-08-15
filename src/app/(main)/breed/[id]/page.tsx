@@ -62,22 +62,20 @@ const BreedPage = async ({ params }: BreedPageProps) => {
             <p className="mt-2 text-secondary-700">
               <strong>Temperament:</strong> {breed.temperament}
             </p>
-            {breed.origin ||
-              (breed.country_code && (
-                <p className="mt-2 text-secondary-700">
-                  <strong>Origin:</strong> {breed.origin || breed.country_code}
-                </p>
-              ))}
+            {(breed.origin || breed.country_code) && (
+              <p className="mt-2 text-secondary-700">
+                <strong>Origin:</strong> {breed.origin || breed.country_code}
+              </p>
+            )}
             <p className="mt-2 text-secondary-700">
               <strong>Life Span:</strong> {breed.life_span} years
             </p>
-            {breed.description ||
-              (breed.bred_for && (
-                <p className="mt-2 text-secondary-700">
-                  <strong>Description:</strong>{" "}
-                  {breed.description || breed.bred_for}
-                </p>
-              ))}
+            {(breed.description || breed.bred_for) && (
+              <p className="mt-2 text-secondary-700">
+                <strong>Description:</strong>{" "}
+                {breed.description || breed.bred_for}
+              </p>
+            )}
           </div>
         )}
         <div className="pt-5 grid grid-cols-1 gap-x-2 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">

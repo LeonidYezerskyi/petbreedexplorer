@@ -25,7 +25,6 @@ const BreedList: React.FC<BreedListProps> = ({ initialBreeds }) => {
 
   const handleLoadMore = async () => {
     const newBreeds = await getAllBreeds(breeds.length / 6 + 1);
-    console.log("🚀 ~ handleLoadMore ~ newBreeds:", newBreeds);
 
     setBreeds((prevBreeds) => [...prevBreeds, ...newBreeds]);
   };
