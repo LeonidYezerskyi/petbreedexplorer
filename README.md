@@ -1,8 +1,11 @@
 Pet Breed Explorer
+
 Objective
+
 This project is designed to build a web application that lets users explore various breeds of cats and dogs in a fun and informative way. The main focus is on providing a simple, easy-to-use interface where users can browse through random breeds, view detailed information about each breed, and see a gallery of images for each breed.
 
 Features
+
 Homepage
 The homepage presents a collection of random cat and dog breeds. Each breed is displayed as a card featuring an image and the breed's name. This provides users with a quick glance at the different breeds available. Clicking on any breed card directs the user to a dedicated breed page with more in-depth details.
 
