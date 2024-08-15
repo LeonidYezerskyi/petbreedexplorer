@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Pet Breed Explorer
 
-## Getting Started
+Objective
 
-First, run the development server:
+This project is designed to build a web application that lets users explore various breeds of cats and dogs in a fun and informative way. The main focus is on providing a simple, easy-to-use interface where users can browse through random breeds, view detailed information about each breed, and see a gallery of images for each breed.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Homepage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The homepage presents a collection of random cat and dog breeds. Each breed is displayed as a card featuring an image and the breed's name. This provides users with a quick glance at the different breeds available. Clicking on any breed card directs the user to a dedicated breed page with more in-depth details.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Breed Page
 
-## Learn More
+The breed page offers comprehensive details about the selected breed. Users can explore specific information about the breed, including its characteristics, and view a gallery of images showcasing different animals of that breed. This page is dynamically generated based on the breed selected from the homepage.
 
-To learn more about Next.js, take a look at the following resources:
+Technology Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Frontend: Next.js, TypeScript, Tailwind CSS
+APIs: The Dog API, The Cat API
+Deployment
+The application is deployed on Vercel, ensuring smooth accessibility and performance.
