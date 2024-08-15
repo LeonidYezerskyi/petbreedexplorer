@@ -1,5 +1,5 @@
 import React from "react";
-import { getCatsByBreed, getDogsByBreed } from "@/services/api.ts";
+import { getCatsByBreed, getDogsByBreed } from "@/services/api";
 import Image from "next/image";
 import { Container } from "@/components/Container";
 
