@@ -3,31 +3,25 @@ import { getCatsByBreed, getDogsByBreed } from "@/services/api";
 import Image from "next/image";
 import { Container } from "@/components/Container";
 
-interface Breed {
-  id: string;
-  name: string;
-  image: {
-    url: string;
-  };
-  breeds: {
-    weight: {
-      imperial: string;
-      metric: string;
-    };
-    name: string;
-    temperament: string;
-    origin?: string;
-    country_code?: string;
-    description?: string;
-    bred_for?: string;
-    life_span: string;
-  }[];
-}
-
 interface BreedPageProps {
   params: {
     id: string;
   };
+}
+
+interface Breed {
+  id: string;
+  name: string;
+  weight: {
+    imperial: string;
+    metric: string;
+  };
+  temperament: string;
+  origin?: string;
+  country_code?: string;
+  description?: string;
+  bred_for?: string;
+  life_span: string;
 }
 
 const BreedPage = async ({ params }: BreedPageProps) => {
@@ -47,7 +41,7 @@ const BreedPage = async ({ params }: BreedPageProps) => {
     return <div>Error fetching breed data</div>;
   }
 
-  const breed = animals[0]?.breeds[0];
+  const breed: Breed | undefined = animals[0]?.breeds[0];
 
   return (
     <div className="flex w-full flex-col items-center">
@@ -62,9 +56,14 @@ const BreedPage = async ({ params }: BreedPageProps) => {
             <p className="mt-2 text-secondary-700">
               <strong>Temperament:</strong> {breed.temperament}
             </p>
-            {(breed.origin || breed.country_code) && (
+            {breed.origin && (
               <p className="mt-2 text-secondary-700">
-                <strong>Origin:</strong> {breed.origin || breed.country_code}
+                <strong>Origin:</strong> {breed.origin}
+              </p>
+            )}
+            {breed.country_code && (
+              <p className="mt-2 text-secondary-700">
+                <strong>Country Code:</strong> {breed.country_code}
               </p>
             )}
             <p className="mt-2 text-secondary-700">
@@ -84,7 +83,7 @@ const BreedPage = async ({ params }: BreedPageProps) => {
               <div className="w-full h-40 overflow-hidden rounded-lg bg-secondary-200">
                 <Image
                   src={animal.url}
-                  alt={animal.breeds[0]?.name || "Animal Image"}
+                  alt={breed?.name || "Animal Image"}
                   width={500}
                   height={500}
                   className="group-hover:opacity-75"

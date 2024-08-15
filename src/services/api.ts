@@ -11,44 +11,34 @@ interface BreedBase {
   id: string;
   name: string;
   image: Image;
-}
-
-interface Cat extends BreedBase {
   weight: {
     imperial: string;
     metric: string;
   };
   temperament: string;
-  origin: string;
-  description: string;
   life_span: string;
-}
-
-interface Dog extends BreedBase {
-  weight: {
-    imperial: string;
-    metric: string;
-  };
-  temperament: string;
+  description?: string;
+  origin?: string;
   country_code?: string;
   bred_for?: string;
-  description?: string;
-  life_span: string;
 }
+
+interface Cat extends BreedBase {}
+interface Dog extends BreedBase {}
 
 interface CatImage {
   id: string;
   url: string;
+  breeds: Cat[];
 }
 
 interface DogImage {
   id: string;
   url: string;
+  breeds: Dog[];
 }
 
-export const getAllBreeds = async (
-  page: number = 0
-): Promise<(Cat | Dog)[]> => {
+export const getAllBreeds = async (page: number = 0): Promise<BreedBase[]> => {
   try {
     const [catsResponse, dogsResponse] = await Promise.all([
       axios.get<Cat[]>(

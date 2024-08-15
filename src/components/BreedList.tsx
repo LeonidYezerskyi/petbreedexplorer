@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import BreedItem from "./BreedItem";
-import { getAllBreeds } from "@/services/api.ts";
+import { getAllBreeds } from "@/services/api";
 
 interface Image {
   url: string;
@@ -13,7 +13,6 @@ interface Breed {
   id: string;
   name: string;
   image: Image;
-  type: "cat" | "dog";
 }
 
 interface BreedListProps {
